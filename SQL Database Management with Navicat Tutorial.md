@@ -4,11 +4,11 @@ This repository contains comprehensive guides on how to set up, manage, and inte
 
 ## Available Tutorials
 
-1. [**MySQL Tutorial**](MySQL/README.md) - Learn how to set up and manage a MySQL database, one of the world's most popular open-source relational database management systems.
+1. [**MySQL Tutorial**](MySQL/MySQL%20Database%20Tutorial%20with%20Navicat.md) - Learn how to set up and manage a MySQL database, one of the world's most popular open-source relational database management systems.
 
-2. [**SQLite Tutorial**](SQLite/README.md) - Discover how to work with SQLite, a self-contained, serverless, zero-configuration database engine ideal for embedded applications and small to medium-sized projects.
+2. [**SQLite Tutorial**](SQLite/SQLite%20Database%20Tutorial%20with%20Navicat.md) - Discover how to work with SQLite, a self-contained, serverless, zero-configuration database engine ideal for embedded applications and small to medium-sized projects.
 
-3. [**PostgreSQL Tutorial**](PostgreSQL/README.md) - Explore PostgreSQL, an advanced open-source relational database known for its reliability, feature robustness, and performance.
+3. [**PostgreSQL Tutorial**](PostgreSQL/PostgreSQL%20Database%20Tutorial%20with%20Navicat.md) - Explore PostgreSQL, an advanced open-source relational database known for its reliability, feature robustness, and performance.
 
 ## What You'll Learn
 

@@ -1,13 +1,15 @@
 # SQLite Database Tutorial with Navicat
 
+[← Back to Main Tutorial Index](../SQL%20Database%20Management%20with%20Navicat%20Tutorial.md)
+
+This guide provides a comprehensive introduction to SQLite database management using Navicat. SQLite is a self-contained, serverless database engine that's perfect for embedded applications, prototypes, and small to medium-sized projects.
+
 ## Table of Contents
 - [Introduction to SQLite](#introduction-to-sqlite)
 - [Installation](#installation)
 - [Creating and Using SQLite Databases](#creating-and-using-sqlite-databases)
-- [Loading Data](#loading-data)
-- [User Access Control](#user-access-control)
 - [Connecting with Navicat](#connecting-with-navicat)
-- [Common Operations in Navicat](#common-operations-in-navicat)
+- [Advanced SQLite Topics](#advanced-sqlite-topics)
 
 ## Introduction to SQLite
 
@@ -21,6 +23,8 @@ Key features of SQLite:
 - Cross-platform - Works on virtually all operating systems
 
 ## Installation
+
+For detailed installation instructions, see the [SQLite Installation Guide](Installation/README.md).
 
 SQLite is often pre-installed on many operating systems (including macOS and many Linux distributions). However, if you need to install it manually:
 
@@ -45,16 +49,18 @@ brew install sqlite
 ### Linux
 For Debian/Ubuntu:
 ```bash
-sudo apt update
-sudo apt install sqlite3
+wsl sudo apt update
+wsl sudo apt install sqlite3
 ```
 
 For Red Hat/Fedora:
 ```bash
-sudo dnf install sqlite
+wsl sudo dnf install sqlite
 ```
 
 ## Creating and Using SQLite Databases
+
+For detailed instructions on database creation and operations, see the [Running SQLite Guide](Running_SQLite/README.md).
 
 Unlike other database systems, SQLite doesn't require you to set up a server. You simply create or connect to a database file.
 
@@ -64,7 +70,7 @@ Using the SQLite command line:
 
 ```bash
 # Open SQLite with a new or existing database file
-sqlite3 mydatabase.db
+wsl sqlite3 mydatabase.db
 
 # You'll see the SQLite prompt
 sqlite>
@@ -105,84 +111,9 @@ SQLite has special dot commands for various functions:
 .exit or .quit  Exit SQLite
 ```
 
-## Loading Data
-
-### Creating a Database and Table
-```sql
-CREATE TABLE products (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    price REAL,
-    description TEXT
-);
-```
-
-### Loading Data from CSV
-
-1. Open your database:
-```bash
-sqlite3 mydatabase.db
-```
-
-2. Configure import settings and import data:
-```
-.mode csv
-.headers on
-.import /path/to/data.csv products
-```
-
-### Importing SQL Dump File
-```bash
-sqlite3 mydatabase.db < dump.sql
-```
-
-### Exporting Data
-```
--- Export to CSV
-.headers on
-.mode csv
-.output data.csv
-SELECT * FROM products;
-.output stdout
-
--- Export schema
-.output schema.sql
-.schema
-.output stdout
-```
-
-## User Access Control
-
-SQLite has limited built-in user authentication and authorization. It primarily relies on file system permissions for access control.
-
-### File Permissions
-- Set appropriate file permissions on your SQLite database file:
-  
-  **Unix/Linux/macOS**:
-  ```bash
-  # Give read/write access to owner and group only
-  chmod 660 mydatabase.db
-  
-  # Change the owner/group
-  chown user:group mydatabase.db
-  ```
-  
-  **Windows**:
-  - Right-click on the database file > Properties > Security
-  - Adjust permissions for users and groups
-
-### Encryption
-SQLite doesn't have built-in encryption. For sensitive data, consider:
-
-1. **SQLCipher** - An SQLite extension that provides transparent 256-bit AES encryption
-   - [SQLCipher Website](https://www.zetetic.net/sqlcipher/)
-   - Available as a commercial product with open-source community edition
-
-2. **Full Disk Encryption** - Encrypt the entire drive containing your SQLite databases
-
-3. **Application-Level Encryption** - Encrypt sensitive data before storing it in the database
-
 ## Connecting with Navicat
+
+For detailed connection instructions and features, see the [Connecting with Navicat Guide](Connecting_with_Navicat/README.md).
 
 1. **Install Navicat**:
    - Download and install Navicat from the [official website](https://www.navicat.com/en/download/navicat-for-sqlite).
@@ -203,50 +134,14 @@ SQLite doesn't have built-in encryption. For sensitive data, consider:
    - Double-click on your newly created connection in the left sidebar
    - Navicat will connect to the SQLite database and display all tables
 
-## Common Operations in Navicat
+## Advanced SQLite Topics
 
-### Creating a New Database
-1. Click "Connection" and select "SQLite"
-2. Enter a connection name
-3. Click the "..." button next to Database File
-4. Choose a location and name for your new database
-5. Click "Save" and "OK"
+For more detailed guides on working with SQLite in Navicat, explore these topics:
 
-### Browsing Data
-- Expand your connection in the left sidebar
-- Double-click any table to see its data
-- Use the filter and sort options to organize your view
-
-### Running SQL Queries
-1. Click the "Query" button on the toolbar
-2. Select your connection
-3. Write your SQL query in the editor
-4. Click "Run" to execute the query
-
-### Importing Data
-1. Right-click on a table and select "Import Wizard"
-2. Choose the file format (CSV, Excel, JSON, etc.)
-3. Select the file to import
-4. Configure import settings (delimiters, encoding, etc.)
-5. Map columns to table fields
-6. Click "Start" to import the data
-
-### Exporting Data
-1. Right-click on a table and select "Export Wizard"
-2. Choose the export format
-3. Configure export settings
-4. Choose the destination file
-5. Click "Start" to export the data
-
-### Creating and Modifying Tables
-1. Right-click on "Tables" and select "New Table"
-2. Define table structure (columns, types, constraints)
-3. Click "Save" to create the table
-
-### Database Design and Modeling
-1. Click on "Model" in the toolbar
-2. Create a new model
-3. Add tables and define relationships
-4. Synchronize the model with the database
+- [Loading Data into SQLite](Loading_Data/README.md) - Import data from various sources
+- [Browsing and Viewing Data](Browsing_Data/README.md) - Navigate and explore your databases
+- [Running SQL Queries](Running_SQL_Queries/README.md) - Execute and manage SQLite queries
+- [Exporting Data](Exporting_Data/README.md) - Export data to different formats
+- [Database Administration](Database_Administration/README.md) - Manage database settings and security
 
 This tutorial covers the basics of setting up and using SQLite with Navicat. For more detailed information, refer to the [SQLite documentation](https://www.sqlite.org/docs.html) and [Navicat documentation](https://www.navicat.com/en/support/navicat-for-sqlite-manual). 
