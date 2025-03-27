@@ -2,7 +2,7 @@
 
 [← Back to SQLite Database Tutorial](../SQLite%20Database%20Tutorial%20with%20Navicat.md)
 
-This guide provides detailed instructions for running and managing SQLite databases. Unlike traditional database systems that require a server process, SQLite is serverless and runs directly within your application or through the SQLite command-line interface.
+This guide provides detailed instructions on running and managing SQLite databases, including working with the SQLite command-line interface, executing common operations, and understanding SQLite's architecture.
 
 ## Table of Contents
 - [Understanding SQLite Architecture](#understanding-sqlite-architecture)
@@ -16,410 +16,472 @@ This guide provides detailed instructions for running and managing SQLite databa
 
 ## Understanding SQLite Architecture
 
-SQLite uses a unique architecture compared to other database systems:
+Before working with SQLite, it's helpful to understand its unique architecture:
 
 ### Serverless Design
 
-- **No separate server process**: Unlike MySQL or PostgreSQL, SQLite doesn't require a database server
-- **Direct disk access**: SQLite reads and writes directly to ordinary disk files
-- **Self-contained**: The entire database (definitions, tables, indices, data) is stored in a single cross-platform file
+Unlike traditional client-server database systems (MySQL, PostgreSQL, etc.), SQLite:
+- Does not require a separate server process
+- Integrates directly into the application
+- Reads/writes directly to disk files
+- Does not require installation or setup
 
-### SQLite Database Files
+### Single File Structure
 
-- **Single file structure**: A complete database is stored in a single file, typically with a `.db`, `.sqlite`, or `.sqlite3` extension
-- **Cross-platform compatibility**: The same database file works across operating systems
-- **Size limitations**: Theoretically supports databases up to 140 terabytes, though practical limits are often lower
-- **File locking**: SQLite uses file-level locking for write operations
+A SQLite database is contained in a single cross-platform disk file:
+- The entire database (tables, indexes, triggers, views) is in one file
+- File format is stable, cross-platform, and backward compatible
+- Can be copied, moved, or shared between systems easily
+
+### Cross-Platform Compatibility
+
+SQLite databases can be used across different operating systems:
+- The same database file works on Windows, macOS, Linux, etc.
+- Byte order is normalized within the file format
+- No endianness issues between platforms
+
+### Size Limitations
+
+While SQLite is "lite", it can handle substantial data:
+- Maximum database size: 140 terabytes (theoretical)
+- Maximum row size: 1 gigabyte
+- Practical limits depend on operating system and storage
+- Optimal for databases up to several gigabytes
+
+### File Locking Mechanism
+
+SQLite uses file-based locking for concurrency control:
+- Multiple readers allowed simultaneously
+- Only one writer allowed at any time
+- Writers receive exclusive access to the database
+- Lock escalation from shared to exclusive as needed
 
 ## SQLite Command-Line Interface
 
-The SQLite command-line tool (`sqlite3`) is a simple program that allows you to manually enter and execute SQL statements against an SQLite database.
+The SQLite command-line interface (CLI) is a powerful tool for managing SQLite databases.
 
 ### Accessing the Command Line
 
-**Windows (WSL)**:
+**On Windows (using WSL):**
 ```bash
 wsl sqlite3
 ```
 
-**macOS/Linux**:
+**On macOS/Linux:**
 ```bash
 sqlite3
 ```
 
-### Opening a Database
+### Starting SQLite with a Database
 
+To open or create a database:
 ```bash
-# Create/open a database file
 wsl sqlite3 mydatabase.db
-
-# Create/open database in memory (temporary)
-wsl sqlite3 :memory:
 ```
 
-### Command Line Options
+This will:
+- Create a new database file if it doesn't exist
+- Open the existing database if it does exist
+- Present you with the `sqlite>` prompt
 
-```bash
-# Open with column headers displayed
-wsl sqlite3 -header mydatabase.db
+### SQLite Shell Commands
 
-# Set column mode for better readability
-wsl sqlite3 -column mydatabase.db
+The SQLite shell has special "dot" commands that begin with a period:
 
-# Combine options
-wsl sqlite3 -header -column mydatabase.db
+```
+.help           Show help text with all commands
+.open FILENAME  Open a database file
+.databases      List attached databases
+.tables         List tables in the database
+.schema [TABLE] Show the CREATE statements for tables
+.mode MODE      Set output mode (column, csv, html, etc.)
+.headers on|off Turn display of headers on or off
+.quit           Exit the SQLite command-line
+```
 
-# Run SQL directly from command line
-wsl sqlite3 mydatabase.db "SELECT * FROM users;"
+### Customizing the Shell Environment
 
-# Run SQL from file
-wsl sqlite3 mydatabase.db < queries.sql
+For better readability:
+```
+sqlite> .mode column
+sqlite> .headers on
+sqlite> .nullvalue NULL
+```
+
+For saving results:
+```
+sqlite> .output results.txt
+sqlite> SELECT * FROM mytable;
+sqlite> .output stdout  -- Return to console output
 ```
 
 ## Creating and Opening Databases
 
 ### Creating a New Database
 
-1. **Using command line**:
-   ```bash
-   wsl sqlite3 new_database.db
-   sqlite> CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT);
-   sqlite> .quit
-   ```
+**Using the command line:**
+```bash
+wsl sqlite3 new_database.db
+```
 
-2. **Creating in-memory database** (temporary, for testing):
-   ```bash
-   wsl sqlite3 :memory:
-   ```
+**Within SQLite shell:**
+```
+sqlite> .open new_database.db
+```
 
-### Opening Existing Databases
+### In-Memory Databases
 
-1. **From command line**:
-   ```bash
-   wsl sqlite3 mydatabase.db
-   ```
+For temporary operations, create an in-memory database:
+```bash
+wsl sqlite3 :memory:
+```
 
-2. **From Navicat**:
-   - Launch Navicat
-   - Create a new SQLite connection
-   - Browse to your database file
+In-memory databases are useful for:
+- Testing
+- Temporary data processing
+- Performance-critical applications
 
 ### Attaching Multiple Databases
 
-SQLite allows you to work with multiple databases in a single session:
+SQLite can work with multiple databases simultaneously:
 
 ```sql
--- Attach another database file
-ATTACH DATABASE 'another.db' AS other;
+-- Attach another database
+ATTACH DATABASE 'another.db' AS another;
 
--- Now you can query across both
-SELECT * FROM main.users, other.products;
+-- Query from both databases
+SELECT * FROM main.users, another.products;
 
--- Detach when done
-DETACH DATABASE other;
+-- Detach when finished
+DETACH DATABASE another;
 ```
 
 ## Basic SQLite Commands
 
-SQLite command-line interface includes two types of commands:
-1. Standard SQL statements
-2. Special "dot" commands that control the SQLite program itself
+### Table Operations
 
-### Special Dot Commands
-
-```
-.help           Show help on commands
-.tables         List all tables
-.schema         Show the CREATE statements for all tables
-.schema TABLE   Show the CREATE statement for TABLE
-.mode column    Set output mode to columnar
-.headers on     Turn display of headers on
-.width NUM NUM  Set column widths for columnar output
-.output FILE    Send output to FILE
-.output stdout  Send output back to screen
-.dump           Dump database as SQL text
-.exit or .quit  Exit SQLite
-```
-
-### SQL Statement Examples
-
+**Creating tables:**
 ```sql
--- Create a table
-CREATE TABLE products (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    price REAL,
-    description TEXT
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Insert data
-INSERT INTO products (name, price, description) 
-VALUES ('Product 1', 29.99, 'This is product 1');
-
--- Query data
-SELECT * FROM products;
-
--- Update data
-UPDATE products SET price = 24.99 WHERE id = 1;
-
--- Delete data
-DELETE FROM products WHERE id = 1;
 ```
 
-### Transaction Management
+**Altering tables:**
+```sql
+-- Add a column
+ALTER TABLE users ADD COLUMN last_login TIMESTAMP;
 
-SQLite supports transactions for grouping operations:
+-- Rename a table
+ALTER TABLE users RENAME TO app_users;
+```
+
+**Dropping tables:**
+```sql
+DROP TABLE IF EXISTS temp_data;
+```
+
+### Data Manipulation
+
+**Inserting data:**
+```sql
+-- Single row
+INSERT INTO users (username, email) VALUES ('john_doe', 'john@example.com');
+
+-- Multiple rows
+INSERT INTO users (username, email) VALUES 
+    ('jane_smith', 'jane@example.com'),
+    ('bob_jones', 'bob@example.com');
+```
+
+**Updating data:**
+```sql
+UPDATE users 
+SET email = 'new_email@example.com' 
+WHERE username = 'john_doe';
+```
+
+**Deleting data:**
+```sql
+-- Delete specific records
+DELETE FROM users WHERE user_id = 5;
+
+-- Delete all records
+DELETE FROM users;
+```
+
+### Querying Data
+
+**Basic queries:**
+```sql
+-- Select all columns
+SELECT * FROM users;
+
+-- Select specific columns
+SELECT username, email FROM users;
+
+-- Filter with WHERE
+SELECT * FROM users WHERE username LIKE 'j%';
+```
+
+**Sorting and limiting:**
+```sql
+-- Sort results
+SELECT * FROM users ORDER BY created_at DESC;
+
+-- Limit results
+SELECT * FROM users LIMIT 10;
+
+-- Pagination
+SELECT * FROM users LIMIT 10 OFFSET 20;
+```
+
+### Transactions
+
+SQLite is ACID-compliant and supports transactions:
 
 ```sql
 -- Begin a transaction
 BEGIN TRANSACTION;
 
 -- Perform operations
-INSERT INTO products (name, price) VALUES ('Product 2', 19.99);
-INSERT INTO products (name, price) VALUES ('Product 3', 39.99);
+INSERT INTO users (username) VALUES ('user1');
+UPDATE products SET stock = stock - 1 WHERE product_id = 100;
 
 -- Commit changes
 COMMIT;
 
--- Or roll back if needed
+-- Or roll back if there's an issue
 -- ROLLBACK;
 ```
 
 ## SQLite Configuration
 
-SQLite requires minimal configuration, but there are some settings you can adjust:
+SQLite has minimal configuration, mainly through PRAGMA statements.
 
-### Pragmas
-
-SQLite uses PRAGMA statements to modify its behavior:
+### Common PRAGMA Commands
 
 ```sql
--- Check current journal mode
-PRAGMA journal_mode;
-
--- Set WAL journal mode (better for concurrent access)
-PRAGMA journal_mode = WAL;
-
--- Enable foreign key constraints (off by default)
+-- Enable foreign keys (off by default)
 PRAGMA foreign_keys = ON;
 
--- Set cache size (in pages)
-PRAGMA cache_size = 10000;
+-- Set journal mode (options: DELETE, TRUNCATE, PERSIST, MEMORY, WAL, OFF)
+PRAGMA journal_mode = WAL;
 
--- Set page size (before creating any tables)
-PRAGMA page_size = 4096;
+-- Set cache size (in pages)
+PRAGMA cache_size = 5000;
+
+-- Set synchronous mode (options: OFF, NORMAL, FULL, EXTRA)
+PRAGMA synchronous = NORMAL;
+
+-- Check database integrity
+PRAGMA integrity_check;
 ```
 
-### Common Pragmas and Their Use
+### Best Practices for Configuration
 
-| Pragma | Purpose |
-|--------|---------|
-| journal_mode | Controls how journal files are stored (DELETE, TRUNCATE, PERSIST, MEMORY, WAL) |
-| foreign_keys | Enables/disables foreign key constraint enforcement |
-| cache_size | Number of database pages to keep in memory |
-| synchronous | Level of disk synchronization (OFF, NORMAL, FULL) |
-| temp_store | Where temporary tables and indices are stored |
-| page_size | Size of database pages (512-65536 bytes, power of 2) |
-
-### Configuration Best Practices
-
-1. **Enable foreign key constraints**:
-   ```sql
-   PRAGMA foreign_keys = ON;
-   ```
-
-2. **Use WAL mode for better concurrency**:
-   ```sql
-   PRAGMA journal_mode = WAL;
-   ```
-
-3. **Adjust synchronous setting based on need**:
-   ```sql
-   -- Normal safety (balance of safety and speed)
-   PRAGMA synchronous = NORMAL;
-   
-   -- Full safety (slower but safer)
-   PRAGMA synchronous = FULL;
-   
-   -- Maximum speed, risk of corruption on power loss
-   PRAGMA synchronous = OFF;
-   ```
+For optimal performance:
+- Enable WAL (Write-Ahead Logging) for most applications:
+  ```sql
+  PRAGMA journal_mode = WAL;
+  ```
+- Adjust cache size based on available memory:
+  ```sql
+  PRAGMA cache_size = -10000;  -- Negative values are kilobytes, positive are pages
+  ```
+- Consider synchronous settings for speed vs. safety tradeoff:
+  ```sql
+  PRAGMA synchronous = NORMAL;  -- Default, good balance
+  ```
 
 ## Maintaining SQLite Databases
 
-Regular maintenance keeps your SQLite databases running optimally.
+### Vacuuming Databases
 
-### Vacuuming the Database
-
-When you delete data, the database file doesn't automatically shrink. Use VACUUM to reclaim space:
+SQLite does not automatically reclaim space from deleted data. Use VACUUM to compact the database:
 
 ```sql
--- Simple vacuum
+-- Vacuum the entire database
 VACUUM;
 
--- Vacuum into a new file (requires SQLite 3.27.0+)
+-- Vacuum into a new file
 VACUUM INTO 'compacted.db';
 ```
 
 ### Analyzing Tables
 
-Update statistics to improve query planning:
+For query optimization:
 
 ```sql
+-- Analyze a specific table
+ANALYZE users;
+
 -- Analyze all tables
 ANALYZE;
-
--- Analyze specific table
-ANALYZE users;
 ```
 
 ### Integrity Check
 
-Check database for corruption:
+Verify database integrity:
 
 ```sql
 PRAGMA integrity_check;
 ```
 
-### Backing Up Databases
+### Backup and Restore
 
-1. **Using the .backup command**:
-   ```
-   sqlite> .backup 'backup.db'
-   ```
+**Creating backups:**
 
-2. **Using SQL dump**:
-   ```
-   sqlite> .output backup.sql
-   sqlite> .dump
-   sqlite> .output stdout
-   ```
+Using SQL:
+```sql
+-- Backup to SQL
+.output backup.sql
+.dump
+.output stdout
+```
 
-3. **Simple file copy** (when database is not in use):
-   ```bash
-   wsl cp mydatabase.db backup.db
-   ```
+Using the command line:
+```bash
+wsl sqlite3 mydatabase.db .dump > backup.sql
+```
+
+**Restoring from backups:**
+
+```bash
+wsl sqlite3 restored.db < backup.sql
+```
+
+Or within SQLite:
+```sql
+.read backup.sql
+```
 
 ## SQLite in Various Environments
 
-SQLite can be used in many different contexts:
+### SQLite in Command Line
 
-### Command Line
+As demonstrated above, using the `sqlite3` command.
 
-As we've seen, the `sqlite3` command-line tool provides direct access to SQLite databases.
+### SQLite in Programming Languages
 
-### Programming Languages
-
-Most programming languages have SQLite support:
-
-**Python**:
+**Python:**
 ```python
 import sqlite3
 conn = sqlite3.connect('example.db')
-c = conn.cursor()
-c.execute('SELECT * FROM users')
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+conn.close()
 ```
 
-**Node.js**:
+**Node.js:**
 ```javascript
 const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('example.db');
-db.all("SELECT * FROM users", (err, rows) => {
+db.all("SELECT * FROM users", [], (err, rows) => {
   console.log(rows);
 });
+db.close();
 ```
 
-**PHP**:
+**PHP:**
 ```php
 $db = new SQLite3('example.db');
 $results = $db->query('SELECT * FROM users');
 while ($row = $results->fetchArray()) {
-    echo $row['name'] . "\n";
+    print_r($row);
 }
+$db->close();
 ```
 
-### Mobile Applications
+### SQLite in Mobile Applications
 
-SQLite is often used in mobile apps:
+SQLite is widely used in mobile app development:
 
-- **Android**: Using Room persistence library or SQLiteOpenHelper
-- **iOS**: Using Core Data or SQLite directly
+- **Android**: Uses SQLite for local data storage, accessed via Room persistence library or SQLiteOpenHelper
+- **iOS**: Core Data framework often uses SQLite as its persistent store
 
-### Desktop Applications
+### SQLite in Desktop Applications
 
-Many desktop applications use SQLite for data storage, including:
-- Firefox (browser data)
-- Thunderbird (email storage)
-- Skype (chat history)
-- Many games and productivity applications
+Many desktop applications use SQLite for data storage:
+- Web browsers (Firefox, Chrome) for bookmarks, history, etc.
+- Email clients for local message storage
+- Media players for library management
 
 ## Troubleshooting
 
-Common SQLite issues and their solutions:
+### Database Locking
 
-### Database Locked
+**Problem**: "database is locked" error
 
-**Problem**: "database is locked" error when trying to write to the database.
+**Solutions**:
+- Ensure all connections are properly closed
+- Use transactions appropriately
+- Configure a busy timeout:
+  ```sql
+  PRAGMA busy_timeout = 5000;  -- Wait up to 5 seconds
+  ```
+- Check for other processes accessing the database
+- Consider using WAL mode for better concurrency
 
-**Solution**:
-1. Ensure all other connections are closed
-2. Check if another process is using the database
-3. Increase timeout:
-   ```sql
-   PRAGMA busy_timeout = 5000;  -- 5 seconds
-   ```
+### Database Corruption
 
-### Corruption Issues
+**Problem**: Database file is corrupted
 
-**Problem**: Database corruption after system crash or power failure.
-
-**Solution**:
-1. Run integrity check:
-   ```sql
-   PRAGMA integrity_check;
-   ```
-2. Restore from a backup if available
-3. Use SQLite recovery tools (like `.recover` in newer versions)
-4. Consider using WAL mode to reduce corruption risk
+**Solutions**:
+- Run integrity check:
+  ```sql
+  PRAGMA integrity_check;
+  ```
+- Restore from a backup
+- Dump recoverable data:
+  ```sql
+  .output recovered.sql
+  .dump
+  ```
+- Rebuild the database from the dump
 
 ### Performance Issues
 
-**Problem**: Slow queries or operations.
+**Problem**: Slow query execution
 
-**Solution**:
-1. Create proper indexes:
-   ```sql
-   CREATE INDEX idx_users_email ON users(email);
-   ```
-2. Use EXPLAIN QUERY PLAN to analyze queries:
-   ```sql
-   EXPLAIN QUERY PLAN SELECT * FROM users WHERE email = 'test@example.com';
-   ```
-3. Enable the cache:
-   ```sql
-   PRAGMA cache_size = 10000;
-   ```
-4. Consider using prepared statements for repeated queries
-5. Use transactions for multiple inserts/updates
+**Solutions**:
+- Create indexes for frequently queried columns:
+  ```sql
+  CREATE INDEX idx_username ON users(username);
+  ```
+- Analyze tables to improve query planning:
+  ```sql
+  ANALYZE;
+  ```
+- Use EXPLAIN QUERY PLAN to understand query execution:
+  ```sql
+  EXPLAIN QUERY PLAN SELECT * FROM users WHERE username = 'john';
+  ```
+- Enable WAL mode for concurrent access patterns
+- Optimize queries to avoid full table scans
 
 ### Concurrency Limitations
 
-**Problem**: Multiple processes trying to write to the database.
+**Problem**: Limited support for concurrent write operations
 
-**Solution**:
-1. Use WAL mode for better concurrency:
-   ```sql
-   PRAGMA journal_mode = WAL;
-   ```
-2. Keep transactions short
-3. Consider a client-server database if you need high concurrency
+**Solutions**:
+- Use transactions to minimize lock duration
+- Implement application-level queuing for write operations
+- Consider WAL mode for better concurrency:
+  ```sql
+  PRAGMA journal_mode = WAL;
+  ```
+- For high concurrency needs, consider a client-server database instead
 
 ## Next Steps
 
-Now that you understand how to run and manage SQLite databases, you can:
-
-1. [Connect to your SQLite database using Navicat](../Connecting_with_Navicat/README.md)
-2. [Load data into your SQLite database](../Loading_Data/README.md)
-3. [Browse and explore your database](../Browsing_Data/README.md)
+Now that you understand how to run SQLite databases, you can proceed to:
+- [Connect to SQLite using Navicat](../Connecting_with_Navicat/README.md)
+- [Load data into your SQLite database](../Loading_Data/README.md)
+- [Run SQL queries with Navicat](../Running_SQL_Queries/README.md)
 
 For more information, refer to the [official SQLite documentation](https://www.sqlite.org/docs.html). 
