@@ -1,253 +1,253 @@
-# 使用 Navicat 浏览 PostgreSQL 数据
+# Browsing PostgreSQL Data with Navicat
 
-[← 返回 PostgreSQL 数据库教程](../PostgreSQL%20Database%20Tutorial%20with%20Navicat.md)
+[← Back to PostgreSQL Database Tutorial](../PostgreSQL%20Database%20Tutorial%20with%20Navicat.md)
 
-本指南详细介绍如何使用 Navicat 高效浏览、导航和查看 PostgreSQL 数据库中的数据，包括基本和高级数据浏览技术。
+This guide provides detailed instructions on how to efficiently browse, navigate, and view data in PostgreSQL databases using Navicat, including basic and advanced data browsing techniques.
 
-## 目录
-- [数据库对象导航](#数据库对象导航)
-- [表数据查看](#表数据查看)
-- [高级筛选和排序](#高级筛选和排序)
-- [数据可视化](#数据可视化)
-- [数据关系浏览](#数据关系浏览)
-- [自定义数据视图](#自定义数据视图)
-- [搜索和替换](#搜索和替换)
-- [导出查看结果](#导出查看结果)
-- [性能优化技巧](#性能优化技巧)
+## Table of Contents
+- [Database Object Navigation](#database-object-navigation)
+- [Table Data Viewing](#table-data-viewing)
+- [Advanced Filtering and Sorting](#advanced-filtering-and-sorting)
+- [Data Visualization](#data-visualization)
+- [Data Relationship Browsing](#data-relationship-browsing)
+- [Custom Data Views](#custom-data-views)
+- [Search and Replace](#search-and-replace)
+- [Exporting View Results](#exporting-view-results)
+- [Performance Optimization Tips](#performance-optimization-tips)
 
-## 数据库对象导航
+## Database Object Navigation
 
-### 使用对象浏览器
+### Using Object Browser
 
-连接到 PostgreSQL 数据库后，Navicat 的左侧面板显示对象浏览器，帮助您导航数据库结构：
+After connecting to a PostgreSQL database, Navicat's left panel displays the Object Browser to help you navigate the database structure:
 
-1. **展开连接**：双击连接或点击连接旁边的展开图标（+）。
+1. **Expand Connection**: Double-click the connection or click the expand icon (+) next to the connection.
    
-   ![展开连接](images/expand_connection.png)
+   ![Expand Connection](images/expand_connection.png)
 
-2. **浏览对象类型**：展开后可以看到按类型组织的对象：
-   - 数据库
-   - 模式（默认为 public）
-   - 表
-   - 视图
-   - 函数
-   - 存储过程
-   - 序列
-   - 类型（PostgreSQL 的自定义类型）
-   - 规则
-   - 触发器
-   - 外部表
-   - 物化视图
-   - 域
+2. **Browse Object Types**: After expanding, you can see objects organized by type:
+   - Databases
+   - Schemas (default is public)
+   - Tables
+   - Views
+   - Functions
+   - Stored Procedures
+   - Sequences
+   - Types (PostgreSQL custom types)
+   - Rules
+   - Triggers
+   - Foreign Tables
+   - Materialized Views
+   - Domains
    
-3. **搜索对象**：
-   - 使用对象浏览器顶部的搜索框快速查找特定对象
-   - 支持通配符（如: "user*" 查找所有以 "user" 开头的对象）
+3. **Search for Objects**:
+   - Use the search box at the top of the Object Browser to quickly find specific objects
+   - Supports wildcards (e.g., "user*" to find all objects starting with "user")
 
-4. **对象属性**：
-   - 右键点击任何对象查看可用操作
-   - 选择"属性"查看对象详细信息
-   - 使用工具栏上的"属性"按钮（或按 F6）
+4. **Object Properties**:
+   - Right-click any object to view available actions
+   - Select "Properties" to view detailed object information
+   - Use the "Properties" button on the toolbar (or press F6)
 
-### 管理数据库连接
+### Managing Database Connections
 
-1. **创建连接分组**：
-   - 右击连接窗口空白处，选择"新建组"
-   - 为不同项目或环境创建逻辑分组
-   - 拖放连接到适当的组中
+1. **Create Connection Groups**:
+   - Right-click on blank space in the connection window, select "New Group"
+   - Create logical groups for different projects or environments
+   - Drag and drop connections into appropriate groups
 
-2. **连接颜色编码**：
-   - 右击连接，选择"编辑连接"
-   - 在常规选项卡中，点击颜色方块设置连接颜色
-   - 对生产/开发环境使用不同颜色增强视觉区分
+2. **Connection Color Coding**:
+   - Right-click a connection, select "Edit Connection"
+   - In the General tab, click the color square to set connection color
+   - Use different colors for production/development environments to enhance visual distinction
 
-3. **收藏夹和最近使用的对象**：
-   - 右击常用对象，选择"添加到收藏夹"
-   - 使用 Navicat 顶部菜单的"收藏夹"访问它们
-   - 使用"最近打开的对象"快速返回以前查看的项目
+3. **Favorites and Recently Used Objects**:
+   - Right-click frequently used objects, select "Add to Favorites"
+   - Access them using the "Favorites" in Navicat's top menu
+   - Use "Recently Opened Objects" to quickly return to previously viewed items
 
-## 表数据查看
+## Table Data Viewing
 
-### 基本表数据查看
+### Basic Table Data Viewing
 
-1. **打开表数据**：
-   - 在对象浏览器中，展开"表"节点
-   - 双击表名或右键点击表名并选择"打开表"
-   - 或选择表后点击工具栏中的"表"按钮
+1. **Open Table Data**:
+   - In the Object Browser, expand the "Tables" node
+   - Double-click a table name or right-click the table name and select "Open Table"
+   - Or select a table and click the "Table" button in the toolbar
 
-2. **表设计**：
-   - 切换到"设计"选项卡查看表结构
-   - 查看列名、数据类型、默认值和约束
-   - 查看索引、外键和其他表属性
+2. **Table Design**:
+   - Switch to the "Design" tab to view table structure
+   - View column names, data types, default values, and constraints
+   - View indexes, foreign keys, and other table properties
 
-3. **表数据网格**：
-   - 在"数据"选项卡中查看表数据
-   - 数据以可编辑的网格形式显示
-   - 在网格底部查看记录计数和其他统计信息
+3. **Table Data Grid**:
+   - View table data in the "Data" tab
+   - Data is displayed as an editable grid
+   - View record count and other statistics at the bottom of the grid
 
-   ![表数据视图](images/table_data_view.png)
+   ![Table Data View](images/table_data_view.png)
 
-4. **自定义网格显示**：
-   - 右击列标题调整显示选项
-   - 重新排序列（拖放列标题）
-   - 调整列宽（拖动列边界）
-   - 隐藏/显示列（右击列标题选择"隐藏列"）
+4. **Customize Grid Display**:
+   - Right-click column headers to adjust display options
+   - Reorder columns (drag and drop column headers)
+   - Adjust column widths (drag column boundaries)
+   - Hide/show columns (right-click column header and select "Hide Column")
 
-### 数据导航技巧
+### Data Navigation Techniques
 
-1. **分页浏览数据**：
-   - 使用底部的分页控件浏览大型表
-   - 设置分页大小（每页行数）
-   - 跳转到特定页码
+1. **Pagination Browsing**:
+   - Use pagination controls at the bottom to browse large tables
+   - Set page size (rows per page)
+   - Jump to specific page numbers
 
-2. **限制结果集**：
-   - 使用"限制"选项可以控制显示的记录数
-   - 对于大型表，适当限制能提高性能
-   - 打开表数据时，选择"最大行数"选项
+2. **Limit Result Sets**:
+   - Use the "Limit" option to control the number of records displayed
+   - For large tables, appropriate limits can improve performance
+   - Select the "Maximum Rows" option when opening table data
 
-3. **快速定位记录**：
-   - Ctrl+G：跳转到特定行
-   - 使用"查找"功能（Ctrl+F）搜索值
-   - 使用"定位"功能快速定位匹配的行
+3. **Quickly Locate Records**:
+   - Ctrl+G: Jump to a specific row
+   - Use the "Find" function (Ctrl+F) to search for values
+   - Use the "Locate" function to quickly find matching rows
 
-4. **数据列类型识别**：
-   - Navicat 根据数据类型提供不同的列编辑器
-   - 针对不同数据类型的显示格式可定制
-   - 右击列标题，选择"显示格式"自定义显示方式
+4. **Data Column Type Recognition**:
+   - Navicat provides different column editors based on data types
+   - Display formats for different data types can be customized
+   - Right-click column header, select "Display Format" to customize display method
 
-## 高级筛选和排序
+## Advanced Filtering and Sorting
 
-### 数据筛选
+### Data Filtering
 
-1. **使用筛选器**：
-   - 点击工具栏中的筛选图标（漏斗形状）
-   - 或右键点击表格区域，选择"筛选"
-   - 输入筛选条件
+1. **Using Filters**:
+   - Click the filter icon in the toolbar (funnel shape)
+   - Or right-click the table area and select "Filter"
+   - Enter filter conditions
 
-   ![筛选数据](images/filter_data.png)
+   ![Filter Data](images/filter_data.png)
 
-2. **自定义筛选条件**：
-   - 简单筛选：在筛选行上直接输入值
-   - 高级筛选：点击列上的筛选按钮（箭头）
-   - 选择预定义的筛选条件（相等、包含、开始于等）
-   - 可以组合多列筛选
+2. **Custom Filter Conditions**:
+   - Simple filtering: directly enter values in the filter row
+   - Advanced filtering: click the filter button (arrow) on columns
+   - Select predefined filter conditions (equals, contains, begins with, etc.)
+   - Combine multiple column filters
 
-3. **使用 SQL 筛选**：
-   - 点击"SQL 筛选"按钮
-   - 输入自定义 WHERE 子句（不需要包含 WHERE 关键字）
-   - 例如：`column1 = 'value' AND column2 > 100`
+3. **Using SQL Filtering**:
+   - Click the "SQL Filter" button
+   - Enter a custom WHERE clause (no need to include the WHERE keyword)
+   - Example: `column1 = 'value' AND column2 > 100`
 
-4. **保存筛选器**：
-   - 创建后保存常用筛选器
-   - 点击"保存当前筛选"按钮
-   - 命名并保存当前筛选条件
-   - 使用"加载筛选"按钮应用已保存的筛选器
+4. **Save Filters**:
+   - Save frequently used filters after creation
+   - Click the "Save Current Filter" button
+   - Name and save the current filter conditions
+   - Use the "Load Filter" button to apply saved filters
 
-### 数据排序
+### Data Sorting
 
-1. **基本排序**：
-   - 点击列标题进行升序排序
-   - 再次点击切换为降序
-   - 列标题上的箭头指示排序方向
+1. **Basic Sorting**:
+   - Click a column header for ascending sort
+   - Click again to toggle to descending
+   - Arrows on column headers indicate sort direction
 
-2. **多列排序**：
-   - 按住 Shift 键并点击多个列标题
-   - 先点击的列为主排序列
-   - 或使用"排序"对话框设置复杂排序
+2. **Multi-column Sorting**:
+   - Hold the Shift key and click multiple column headers
+   - The first column clicked becomes the primary sort column
+   - Or use the "Sort" dialog to set complex sorting
 
-3. **自定义排序**：
-   - 点击工具栏的排序按钮
-   - 选择排序列和顺序（升序/降序）
-   - 添加多个排序规则
-   - 设置排序优先级（拖动规则调整顺序）
+3. **Custom Sorting**:
+   - Click the Sort button in the toolbar
+   - Select columns and order (ascending/descending)
+   - Add multiple sort rules
+   - Set sort priority (drag rules to adjust order)
 
-4. **保存排序设置**：
-   - 保存常用排序配置
-   - 点击"保存当前排序"按钮
-   - 为排序配置命名
-   - 使用"加载排序"应用已保存的排序设置
+4. **Save Sort Settings**:
+   - Save frequently used sort configurations
+   - Click the "Save Current Sort" button
+   - Name your sort configuration
+   - Use "Load Sort" to apply saved sort settings
 
-## 数据可视化
+## Data Visualization
 
-### 图表视图
+### Chart View
 
-Navicat 提供图表功能，帮助可视化表数据：
+Navicat provides charting functionality to help visualize table data:
 
-1. **创建图表**：
-   - 在表的"数据"选项卡中，点击右下角的"图表"按钮
-   - 或右键点击表，选择"图表"
-   - 选择图表类型（柱状图、折线图、饼图等）
+1. **Create Charts**:
+   - In the table's "Data" tab, click the "Chart" button in the bottom right
+   - Or right-click the table and select "Chart"
+   - Select chart type (bar chart, line chart, pie chart, etc.)
 
-   ![图表视图](images/chart_view.png)
+   ![Chart View](images/chart_view.png)
 
-2. **配置图表数据**：
-   - 选择要在图表中使用的字段
-   - 设置维度（X 轴）和度量（Y 轴）
-   - 配置筛选条件
-   - 设置聚合函数（计数、总和、平均值等）
+2. **Configure Chart Data**:
+   - Select fields to use in the chart
+   - Set dimensions (X-axis) and measures (Y-axis)
+   - Configure filter conditions
+   - Set aggregation functions (count, sum, average, etc.)
 
-3. **自定义图表外观**：
-   - 调整图表标题和样式
-   - 更改颜色主题
-   - 设置图例位置
-   - 配置轴标签和格式
+3. **Customize Chart Appearance**:
+   - Adjust chart title and style
+   - Change color theme
+   - Set legend position
+   - Configure axis labels and formats
 
-4. **交互式图表**：
-   - 悬停查看数据点详情
-   - 缩放和平移图表
-   - 突出显示特定数据系列
-   - 导出图表为图像
+4. **Interactive Charts**:
+   - Hover to view data point details
+   - Zoom and pan charts
+   - Highlight specific data series
+   - Export charts as images
 
-### JSON 和 XML 数据可视化
+### JSON and XML Data Visualization
 
-PostgreSQL 对 JSON 和 XML 类型有很好的支持，Navicat 提供了特殊的查看工具：
+PostgreSQL provides good support for JSON and XML types, and Navicat offers special viewing tools:
 
-1. **JSON 数据查看**：
-   - JSON 列的值以可折叠的树形结构显示
-   - 点击展开/折叠不同层级的 JSON 结构
-   - 右键点击 JSON 数据，选择"以 JSON 编辑器打开"获取更强大的功能
+1. **JSON Data Viewing**:
+   - JSON column values are displayed as collapsible tree structures
+   - Click to expand/collapse different levels of JSON structure
+   - Right-click JSON data and select "Open with JSON Editor" for more powerful features
 
-2. **XML 数据查看**：
-   - XML 数据也有专用的查看器
-   - 支持语法高亮和格式化
-   - 提供树形视图导航
+2. **XML Data Viewing**:
+   - XML data also has a dedicated viewer
+   - Supports syntax highlighting and formatting
+   - Provides tree view navigation
 
-## 数据关系浏览
+## Data Relationship Browsing
 
-### 使用外键导航
+### Navigating with Foreign Keys
 
-利用 PostgreSQL 中定义的外键关系在相关表之间导航：
+Leverage foreign key relationships defined in PostgreSQL to navigate between related tables:
 
-1. **查看相关记录**：
-   - 在表数据视图中，右键点击包含外键的单元格
-   - 选择"查看外键"
-   - Navicat 自动打开关联表并显示相关记录
+1. **View Related Records**:
+   - In the table data view, right-click a cell containing a foreign key
+   - Select "View Foreign Key"
+   - Navicat automatically opens the related table and displays the associated records
 
-2. **ER 图表导航**：
-   - 点击工具栏上的"ER 图表"按钮
-   - 创建或打开包含相关表的 ER 图表
-   - 通过关系线直观了解表之间的关系
-   - 双击表在图表中直接查看数据
+2. **ER Diagram Navigation**:
+   - Click the "ER Diagram" button on the toolbar
+   - Create or open an ER diagram containing related tables
+   - Visually understand relationships between tables through relationship lines
+   - Double-click tables to view data directly in the diagram
 
-### 使用主从视图
+### Using Master-Detail View
 
-1. **设置主从视图**：
-   - 选择具有关系的两个或多个表
-   - 右键点击，选择"主从视图"
-   - 设置主表和从表关系
+1. **Set Up Master-Detail View**:
+   - Select two or more tables with relationships
+   - Right-click and select "Master-Detail View"
+   - Set up master table and detail table relationships
 
-2. **使用主从视图浏览数据**：
-   - 选择主表记录后，下方自动显示关联的从表记录
-   - 支持多级主从关系
-   - 便于查看和编辑具有父子关系的数据
+2. **Browse Data with Master-Detail View**:
+   - After selecting a master table record, related detail table records are automatically displayed below
+   - Supports multi-level master-detail relationships
+   - Convenient for viewing and editing data with parent-child relationships
 
-## 自定义数据视图
+## Custom Data Views
 
-### 使用查询创建自定义视图
+### Creating Custom Views with Queries
 
-1. **创建新查询**：
-   - 点击工具栏的"查询"按钮
-   - 编写 SQL 查询，例如：
+1. **Create New Query**:
+   - Click the "Query" button in the toolbar
+   - Write an SQL query, for example:
    ```sql
    SELECT 
        c.customer_id,
@@ -268,170 +268,170 @@ PostgreSQL 对 JSON 和 XML 类型有很好的支持，Navicat 提供了特殊�
    ORDER BY 
        c.name, o.order_date DESC;
    ```
-   - 执行查询查看结果
+   - Execute the query to view results
 
-2. **保存查询**：
-   - 点击"保存"按钮
-   - 输入名称和描述
-   - 将查询保存在适当的连接下
+2. **Save Query**:
+   - Click the "Save" button
+   - Enter a name and description
+   - Save the query under the appropriate connection
 
-3. **创建视图**：
-   - 从查询结果中右键点击，选择"创建视图"
-   - 或直接在数据库中创建视图：
+3. **Create View**:
+   - Right-click on query results and select "Create View"
+   - Or directly create a view in the database:
    ```sql
    CREATE VIEW customer_orders AS
-   SELECT /* 查询内容 */;
+   SELECT /* query content */;
    ```
-   - 视图将出现在对象浏览器的"视图"节点下
+   - The view will appear under the "Views" node in the Object Browser
 
-### 使用自定义字段设置
+### Using Custom Field Settings
 
-1. **自定义数据网格**：
-   - 右击数据网格区域，选择"设置"
-   - 配置网格属性、行高和列宽
+1. **Customize Data Grid**:
+   - Right-click the data grid area and select "Settings"
+   - Configure grid properties, row height, and column width
 
-2. **设置字段显示格式**：
-   - 右击列标题，选择"显示格式"
-   - 为不同数据类型设置格式：
-     - 日期时间：设置日期格式（如 YYYY-MM-DD）
-     - 数字：设置小数位、千位分隔符等
-     - 布尔值：设置显示文本（如"是/否"而非 1/0）
+2. **Set Field Display Format**:
+   - Right-click column header and select "Display Format"
+   - Set formats for different data types:
+     - Date/Time: Set date format (e.g., YYYY-MM-DD)
+     - Numbers: Set decimal places, thousand separators, etc.
+     - Boolean: Set display text (e.g., "Yes/No" instead of 1/0)
 
-3. **设置条件格式**：
-   - 右击数据网格，选择"条件格式"
-   - 设置规则，根据单元格值应用不同格式
-   - 例如，为负值设置红色背景
+3. **Set Conditional Formatting**:
+   - Right-click the data grid and select "Conditional Format"
+   - Set rules to apply different formats based on cell values
+   - For example, set a red background for negative values
 
-## 搜索和替换
+## Search and Replace
 
-### 查找数据
+### Finding Data
 
-1. **基本查找**：
-   - 按 Ctrl+F 打开查找对话框
-   - 输入搜索文本
-   - 设置搜索选项（如区分大小写、全字匹配）
-   - 点击"查找下一个"逐个查找
+1. **Basic Find**:
+   - Press Ctrl+F to open the find dialog
+   - Enter search text
+   - Set search options (e.g., case sensitive, whole word match)
+   - Click "Find Next" to search one by one
 
-2. **高级查找**：
-   - 使用正则表达式进行复杂搜索
-   - 选择要搜索的特定列
-   - 限定搜索范围（当前选择、当前页或全部记录）
+2. **Advanced Find**:
+   - Use regular expressions for complex searches
+   - Select specific columns to search
+   - Limit search scope (current selection, current page, or all records)
 
-### 替换数据
+### Replacing Data
 
-1. **搜索并替换**：
-   - 按 Ctrl+H 打开替换对话框
-   - 输入搜索文本和替换文本
-   - 配置搜索选项
-   - 选择"全部替换"或"逐个替换"
+1. **Search and Replace**:
+   - Press Ctrl+H to open the replace dialog
+   - Enter search text and replacement text
+   - Configure search options
+   - Choose "Replace All" or "Replace One by One"
 
-2. **查看修改**：
-   - 替换操作会高亮显示修改的单元格
-   - 使用"提交"按钮保存更改
-   - 或使用"撤销"取消修改
+2. **View Modifications**:
+   - Replaced cells are highlighted to show modifications
+   - Use the "Commit" button to save changes
+   - Or use "Undo" to cancel modifications
 
-## 导出查看结果
+## Exporting View Results
 
-### 导出表数据
+### Exporting Table Data
 
-1. **导出数据**：
-   - 右键点击表或查询结果，选择"导出向导"
-   - 选择导出格式（CSV, Excel, JSON, HTML 等）
-   - 配置导出选项
+1. **Export Data**:
+   - Right-click the table or query results and select "Export Wizard"
+   - Select export format (CSV, Excel, JSON, HTML, etc.)
+   - Configure export options
 
-2. **快速导出选定数据**：
-   - 选择要导出的行和列
-   - 右键点击，选择"导出选定数据"
-   - 选择导出格式和目标
+2. **Quick Export of Selected Data**:
+   - Select rows and columns to export
+   - Right-click and select "Export Selected Data"
+   - Choose export format and destination
 
-3. **复制到剪贴板**：
-   - 选择要复制的单元格
-   - 按 Ctrl+C 复制到剪贴板
-   - 可直接粘贴到 Excel 或其他应用程序
+3. **Copy to Clipboard**:
+   - Select cells to copy
+   - Press Ctrl+C to copy to clipboard
+   - Paste directly into Excel or other applications
 
-### 打印表数据
+### Printing Table Data
 
-1. **打印预览**：
-   - 右键点击数据网格，选择"打印"
-   - 或按 Ctrl+P
-   - 检查打印预览
+1. **Print Preview**:
+   - Right-click the data grid and select "Print"
+   - Or press Ctrl+P
+   - Check the print preview
 
-2. **自定义打印设置**：
-   - 配置页面方向和边距
-   - 添加页眉和页脚
-   - 设置打印选项（如网格线）
+2. **Custom Print Settings**:
+   - Configure page orientation and margins
+   - Add headers and footers
+   - Set print options (such as grid lines)
 
-## 性能优化技巧
+## Performance Optimization Tips
 
-### 优化大型表的浏览
+### Optimizing Browsing for Large Tables
 
-1. **分页加载**：
-   - 使用分页控件浏览大型表
-   - 增加"每页记录数"，减少页面切换
-   - 避免一次加载全部数据
+1. **Pagination Loading**:
+   - Use pagination controls to browse large tables
+   - Increase "Records per Page" to reduce page switching
+   - Avoid loading all data at once
 
-2. **限制初始加载**：
-   - 打开表时设置"限制"选项
-   - 例如，只加载前 1000 行
-   - 使用筛选器缩小结果集
+2. **Limit Initial Loading**:
+   - Set the "Limit" option when opening tables
+   - For example, only load the first 1000 rows
+   - Use filters to narrow down result sets
 
-3. **使用索引列筛选**：
-   - 优先使用有索引的列进行筛选
-   - PostgreSQL 查询执行会更快
-   - 查看表的"索引"选项卡了解可用索引
+3. **Filter Using Indexed Columns**:
+   - Prioritize filtering on columns with indexes
+   - PostgreSQL query execution will be faster
+   - View the table's "Indexes" tab to understand available indexes
 
-4. **禁用自动刷新**：
-   - 右键点击数据网格，选择"设置"
-   - 禁用自动刷新选项
-   - 减少不必要的数据重载
+4. **Disable Auto-Refresh**:
+   - Right-click the data grid and select "Settings"
+   - Disable the auto-refresh option
+   - Reduce unnecessary data reloading
 
-### 查询执行优化
+### Query Execution Optimization
 
-1. **使用 EXPLAIN**：
-   - 在查询前添加 EXPLAIN ANALYZE
-   - 分析查询执行计划
-   - 识别潜在的性能瓶颈
+1. **Using EXPLAIN**:
+   - Add EXPLAIN ANALYZE before your query
+   - Analyze the query execution plan
+   - Identify potential performance bottlenecks
 
    ```sql
    EXPLAIN ANALYZE
    SELECT * FROM large_table WHERE column = 'value';
    ```
 
-2. **创建视图**：
-   - 对复杂的常用查询创建视图
-   - 减少重复编写复杂查询
-   - 提高浏览复杂数据结构的效率
+2. **Create Views**:
+   - Create views for complex, frequently used queries
+   - Reduce the need to repeatedly write complex queries
+   - Improve efficiency when browsing complex data structures
 
-## 高级浏览技巧
+## Advanced Browsing Techniques
 
-### 使用数据打印机
+### Using Data Printer
 
-1. **自定义报表**：
-   - 选择"工具">"数据打印机"
-   - 设计自定义表格报表
-   - 添加字段、计算和格式
+1. **Custom Reports**:
+   - Select "Tools" > "Data Printer"
+   - Design custom tabular reports
+   - Add fields, calculations, and formatting
 
-2. **生成报表**：
-   - 运行数据打印机报表
-   - 预览生成的报表
-   - 导出为 PDF 或打印报表
+2. **Generate Reports**:
+   - Run Data Printer reports
+   - Preview generated reports
+   - Export to PDF or print reports
 
-### 数据比较和同步
+### Data Comparison and Synchronization
 
-1. **比较表数据**：
-   - 选择两个表，右键选择"比较数据"
-   - 设置对应字段
-   - 查看差异
+1. **Compare Table Data**:
+   - Select two tables, right-click and select "Compare Data"
+   - Set corresponding fields
+   - View differences
 
-2. **同步数据**：
-   - 比较后选择要同步的差异
-   - 生成同步脚本
-   - 执行同步操作
+2. **Synchronize Data**:
+   - After comparison, select differences to synchronize
+   - Generate synchronization script
+   - Execute synchronization operation
 
-## 下一步
+## Next Steps
 
-在掌握了如何浏览和查看 PostgreSQL 数据后，您可能希望了解如何：
+Now that you've mastered how to browse and view PostgreSQL data, you may want to learn how to:
 
-- [运行 SQL 查询](../Running_SQL_Queries/README.md)
-- [导出数据](../Exporting_Data/README.md)
-- [数据库管理](../Database_Administration/README.md) 
+- [Run SQL Queries](../Running_SQL_Queries/README.md)
+- [Export Data](../Exporting_Data/README.md)
+- [Database Administration](../Database_Administration/README.md) 

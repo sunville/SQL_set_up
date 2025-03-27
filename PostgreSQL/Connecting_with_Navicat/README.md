@@ -1,280 +1,280 @@
-# 使用 Navicat 连接 PostgreSQL 数据库
+# Connecting to PostgreSQL Database with Navicat
 
-[← 返回 PostgreSQL 数据库教程](../PostgreSQL%20Database%20Tutorial%20with%20Navicat.md)
+[← Back to PostgreSQL Database Tutorial](../PostgreSQL%20Database%20Tutorial%20with%20Navicat.md)
 
-本指南将详细介绍如何使用 Navicat 连接和管理 PostgreSQL 数据库，包括连接设置、身份验证选项以及常见的连接问题解决方法。
+This guide provides detailed instructions on how to connect to and manage PostgreSQL databases using Navicat, including connection settings, authentication options, and solutions for common connection issues.
 
-## 目录
-- [安装 Navicat](#安装-navicat)
-- [创建新的 PostgreSQL 连接](#创建新的-postgresql-连接)
-- [连接属性设置](#连接属性设置)
-- [测试连接](#测试连接)
-- [高级连接选项](#高级连接选项)
-- [SSL 连接配置](#ssl-连接配置)
-- [SSH 隧道连接](#ssh-隧道连接)
-- [管理多个连接](#管理多个连接)
-- [连接故障排除](#连接故障排除)
-- [连接安全最佳实践](#连接安全最佳实践)
+## Table of Contents
+- [Installing Navicat](#installing-navicat)
+- [Creating a New PostgreSQL Connection](#creating-a-new-postgresql-connection)
+- [Connection Property Settings](#connection-property-settings)
+- [Testing the Connection](#testing-the-connection)
+- [Advanced Connection Options](#advanced-connection-options)
+- [SSL Connection Configuration](#ssl-connection-configuration)
+- [SSH Tunnel Connection](#ssh-tunnel-connection)
+- [Managing Multiple Connections](#managing-multiple-connections)
+- [Connection Troubleshooting](#connection-troubleshooting)
+- [Connection Security Best Practices](#connection-security-best-practices)
 
-## 安装 Navicat
+## Installing Navicat
 
-在连接 PostgreSQL 数据库之前，需要先安装 Navicat：
+Before connecting to a PostgreSQL database, you need to install Navicat:
 
-1. 访问 [Navicat 官方网站](https://www.navicat.com/cn/download/navicat-for-postgresql) 下载 Navicat for PostgreSQL。
-2. 选择适合您操作系统的版本（Windows, macOS 或 Linux）。
-3. 下载并运行安装程序，按照向导完成安装。
-4. 安装完成后启动 Navicat（您可以使用 14 天免费试用版）。
+1. Visit the [Navicat official website](https://www.navicat.com/en/download/navicat-for-postgresql) to download Navicat for PostgreSQL.
+2. Choose the version suitable for your operating system (Windows, macOS, or Linux).
+3. Download and run the installer, follow the wizard to complete the installation.
+4. Launch Navicat after installation (you can use the 14-day free trial).
 
-## 创建新的 PostgreSQL 连接
+## Creating a New PostgreSQL Connection
 
-启动 Navicat 后，按照以下步骤创建新的 PostgreSQL 连接：
+After launching Navicat, follow these steps to create a new PostgreSQL connection:
 
-1. 点击左上角的**连接**按钮，选择 **PostgreSQL**。
+1. Click the **Connection** button in the top-left corner, select **PostgreSQL**.
 
-   ![新建连接](images/new_connection.png)
+   ![New Connection](images/new_connection.png)
 
-2. 在连接对话框中，填写以下基本信息：
+2. In the connection dialog, fill in the following basic information:
 
-   - **连接名**：输入一个有意义的名称，如"本地 PostgreSQL"或"生产数据库"。
-   - **主机**：输入 PostgreSQL 服务器的主机名或 IP 地址。
-     - 本地服务器通常是 `localhost` 或 `127.0.0.1`
-     - 远程服务器则需要输入相应的 IP 地址或域名
-   - **端口**：输入 PostgreSQL 服务器的端口号（默认为 `5432`）。
-   - **初始数据库**：选择要连接的数据库名称（如果不确定，可以输入 `postgres`）。
-   - **用户名**：输入 PostgreSQL 用户名（默认管理员通常是 `postgres`）。
-   - **密码**：输入与用户名对应的密码。
+   - **Connection Name**: Enter a meaningful name, such as "Local PostgreSQL" or "Production Database".
+   - **Host**: Enter the hostname or IP address of the PostgreSQL server.
+     - For local servers, typically `localhost` or `127.0.0.1`
+     - For remote servers, enter the appropriate IP address or domain name
+   - **Port**: Enter the PostgreSQL server port number (default is `5432`).
+   - **Initial Database**: Select the database name to connect to (if unsure, you can enter `postgres`).
+   - **Username**: Enter the PostgreSQL username (default administrator is usually `postgres`).
+   - **Password**: Enter the password corresponding to the username.
    
-   ![连接设置](images/connection_settings.png)
+   ![Connection Settings](images/connection_settings.png)
 
-3. 点击**测试连接**按钮验证连接是否成功。
+3. Click the **Test Connection** button to verify if the connection is successful.
 
-4. 如果测试成功，点击**确定**保存连接设置。
+4. If the test is successful, click **OK** to save the connection settings.
 
-## 连接属性设置
+## Connection Property Settings
 
-除了基本连接信息外，Navicat 还提供了许多可自定义的连接属性：
+In addition to basic connection information, Navicat provides many customizable connection properties:
 
-| 属性 | 描述 | 示例值 |
+| Property | Description | Example Values |
 |------|------|--------|
-| 连接名 | 标识连接的名称 | 开发环境-PostgreSQL |
-| 主机 | 服务器主机名或 IP 地址 | localhost, 192.168.1.100 |
-| 端口 | PostgreSQL 服务器端口 | 5432 |
-| 初始数据库 | 连接时打开的数据库 | postgres, mydatabase |
-| 用户名 | 身份验证用户名 | postgres, dbuser |
-| 密码 | 用户密码 | （隐藏） |
-| 编码 | 客户端字符集编码 | UTF-8, SQL_ASCII |
-| 启用保持连接 | 防止空闲超时断开连接 | 是/否 |
-| 自动连接 | 启动 Navicat 时自动连接 | 是/否 |
-| 超时时间(秒) | 数据库连接超时设置 | 30 |
+| Connection Name | Name identifying the connection | Development-PostgreSQL |
+| Host | Server hostname or IP address | localhost, 192.168.1.100 |
+| Port | PostgreSQL server port | 5432 |
+| Initial Database | Database to open on connection | postgres, mydatabase |
+| Username | Authentication username | postgres, dbuser |
+| Password | User password | (hidden) |
+| Encoding | Client character set encoding | UTF-8, SQL_ASCII |
+| Enable Keep Alive | Prevents disconnection due to idle timeout | Yes/No |
+| Auto Connect | Automatically connect when starting Navicat | Yes/No |
+| Timeout (seconds) | Database connection timeout setting | 30 |
 
-## 测试连接
+## Testing the Connection
 
-在使用新连接之前，应该先测试连接确保一切设置正确：
+Before using a new connection, you should test it to ensure all settings are correct:
 
-1. 在连接对话框中点击**测试连接**按钮。
-2. 如果连接成功，您将看到"连接成功"的消息。
-3. 如果连接失败，Navicat 会显示错误信息，帮助您诊断问题。
+1. Click the **Test Connection** button in the connection dialog.
+2. If the connection is successful, you'll see a "Connection Successful" message.
+3. If the connection fails, Navicat will display an error message to help you diagnose the issue.
 
-### 常见测试连接错误：
+### Common Test Connection Errors:
 
-- **连接拒绝**：可能是 PostgreSQL 服务未运行或防火墙阻止了连接。
-- **验证失败**：用户名或密码错误。
-- **无法找到初始数据库**：指定的数据库不存在。
-- **超时**：服务器无法在指定时间内响应。
+- **Connection Refused**: PostgreSQL service may not be running or a firewall is blocking the connection.
+- **Authentication Failed**: Incorrect username or password.
+- **Initial Database Not Found**: The specified database doesn't exist.
+- **Timeout**: The server couldn't respond within the specified time.
 
-## 高级连接选项
+## Advanced Connection Options
 
-Navicat 提供了多种高级连接选项，可通过点击**高级**选项卡访问：
+Navicat offers various advanced connection options, accessible by clicking the **Advanced** tab:
 
-1. **常规设置**：
-   - **连接超时**：设置连接尝试的超时秒数。
-   - **执行超时**：设置查询执行的超时秒数。
-   - **保持连接间隔**：设置向服务器发送保持连接信号的间隔。
+1. **General Settings**:
+   - **Connection Timeout**: Set the timeout in seconds for connection attempts.
+   - **Execution Timeout**: Set the timeout in seconds for query execution.
+   - **Keep Alive Interval**: Set the interval for sending keep-alive signals to the server.
 
-2. **PostgreSQL 特定选项**：
-   - **使用系统 DSN**：连接到系统数据源名称。
-   - **OID 选项**：包含对象标识符。
-   - **限制单一连接**：限制 Navicat 只创建一个连接到服务器。
+2. **PostgreSQL-Specific Options**:
+   - **Use System DSN**: Connect to a system data source name.
+   - **OID Options**: Include object identifiers.
+   - **Limit Single Connection**: Limit Navicat to create only one connection to the server.
 
-3. **SQL 格式设置**：
-   - 设置 SQL 关键字大小写格式。
-   - 配置标识符引用方式。
+3. **SQL Format Settings**:
+   - Set SQL keyword capitalization format.
+   - Configure identifier quoting method.
 
-4. **记录**：
-   - 启用查询日志，记录所有 SQL 操作。
-   - 配置日志文件位置。
+4. **Logging**:
+   - Enable query logging to record all SQL operations.
+   - Configure log file location.
 
-## SSL 连接配置
+## SSL Connection Configuration
 
-为了增强安全性，您可以配置 SSL 连接到 PostgreSQL 服务器：
+To enhance security, you can configure SSL connection to PostgreSQL server:
 
-1. 在连接对话框中，切换到 **SSL** 选项卡。
-2. 选择 **使用 SSL** 复选框。
-3. 配置 SSL 模式（要求、验证 CA、验证完全）。
-4. 如果需要，提供 SSL 证书文件：
-   - CA 证书
-   - 客户端证书
-   - 客户端密钥
-   - 证书吊销列表（CRL）
-5. 点击**测试连接**验证 SSL 设置。
+1. In the connection dialog, switch to the **SSL** tab.
+2. Select the **Use SSL** checkbox.
+3. Configure SSL mode (require, verify-ca, verify-full).
+4. If needed, provide SSL certificate files:
+   - CA Certificate
+   - Client Certificate
+   - Client Key
+   - Certificate Revocation List (CRL)
+5. Click **Test Connection** to verify SSL settings.
 
-## SSH 隧道连接
+## SSH Tunnel Connection
 
-如果 PostgreSQL 服务器位于防火墙后面或需要通过安全通道连接，可以使用 SSH 隧道：
+If the PostgreSQL server is behind a firewall or requires a secure tunnel for connection, you can use an SSH tunnel:
 
-1. 在连接对话框中，切换到 **SSH** 选项卡。
-2. 选择 **使用 SSH 隧道** 复选框。
-3. 填写 SSH 服务器信息：
-   - **主机**：SSH 服务器的主机名或 IP 地址。
-   - **端口**：SSH 端口（默认为 22）。
-   - **用户名**：SSH 服务器的用户名。
-   - **认证方法**：选择密码、公钥或私钥认证。
-   - 根据选择的认证方法，提供相应的密码或密钥文件。
+1. In the connection dialog, switch to the **SSH** tab.
+2. Select the **Use SSH Tunnel** checkbox.
+3. Fill in the SSH server information:
+   - **Host**: The hostname or IP address of the SSH server.
+   - **Port**: SSH port (default is 22).
+   - **Username**: Username for the SSH server.
+   - **Authentication Method**: Choose Password, Public Key, or Private Key authentication.
+   - Depending on the chosen authentication method, provide the corresponding password or key files.
    
-   ![SSH 隧道设置](images/ssh_tunnel.png)
+   ![SSH Tunnel Settings](images/ssh_tunnel.png)
 
-4. 点击**测试连接**验证 SSH 隧道设置。
+4. Click **Test Connection** to verify SSH tunnel settings.
 
-### SSH 隧道工作原理
+### How SSH Tunnel Works
 
-SSH 隧道创建一个加密通道，通过以下步骤工作：
+SSH tunnel creates an encrypted channel, working through these steps:
 
-1. Navicat 连接到 SSH 服务器。
-2. SSH 服务器创建一个到 PostgreSQL 服务器的连接。
-3. 所有数据通过加密的 SSH 隧道传输。
+1. Navicat connects to the SSH server.
+2. The SSH server creates a connection to the PostgreSQL server.
+3. All data is transmitted through the encrypted SSH tunnel.
 
-这种方法特别适合：
-- 连接到不直接暴露在公共网络上的数据库服务器。
-- 需要额外安全层的场景。
-- 绕过网络限制（如防火墙规则）。
+This method is particularly suitable for:
+- Connecting to database servers not directly exposed on public networks.
+- Scenarios requiring an additional security layer.
+- Bypassing network restrictions (like firewall rules).
 
-## 管理多个连接
+## Managing Multiple Connections
 
-随着使用的数据库连接增多，有效管理这些连接变得很重要：
+As the number of database connections increases, effectively managing them becomes important:
 
-1. **连接分组**：
-   - 右击连接窗口空白处，选择**新建组**。
-   - 创建有意义的组（如"开发"、"测试"、"生产"）。
-   - 通过拖放将连接移动到不同组。
+1. **Connection Grouping**:
+   - Right-click on empty space in the connection window, select **New Group**.
+   - Create meaningful groups (like "Development", "Testing", "Production").
+   - Move connections to different groups by dragging and dropping.
 
-2. **连接颜色编码**：
-   - 右击连接，选择**编辑连接**。
-   - 在常规选项卡中，点击颜色方块为连接设置颜色标识。
-   - 使用不同颜色区分生产/开发环境连接。
+2. **Connection Color Coding**:
+   - Right-click a connection, select **Edit Connection**.
+   - In the General tab, click the color square to set a color identifier for the connection.
+   - Use different colors to distinguish between production/development environment connections.
 
-3. **连接设置导出/导入**：
-   - 选择**文件** > **导出连接**保存连接配置。
-   - 使用**文件** > **导入连接**在不同计算机上恢复连接。
+3. **Export/Import Connection Settings**:
+   - Select **File** > **Export Connections** to save connection configurations.
+   - Use **File** > **Import Connections** to restore connections on different computers.
 
-4. **快速搜索连接**：
-   - 使用连接窗口顶部的搜索框快速查找连接。
+4. **Quick Connection Search**:
+   - Use the search box at the top of the connection window to quickly find connections.
 
-## 连接故障排除
+## Connection Troubleshooting
 
-连接到 PostgreSQL 数据库时可能会遇到问题，以下是一些常见问题及解决方法：
+When connecting to PostgreSQL databases, you might encounter issues. Here are some common problems and solutions:
 
-### 连接被拒绝
+### Connection Refused
 
-**可能原因**：
-- PostgreSQL 服务未运行。
-- 防火墙阻止了连接。
-- pg_hba.conf 配置错误。
+**Possible Causes**:
+- PostgreSQL service is not running.
+- Firewall is blocking the connection.
+- pg_hba.conf is incorrectly configured.
 
-**解决方法**：
-1. 检查 PostgreSQL 服务是否运行。
-2. 验证防火墙是否允许端口 5432 的流量。
-3. 检查 pg_hba.conf 文件，确保允许您的 IP 地址/子网连接。
+**Solutions**:
+1. Check if the PostgreSQL service is running.
+2. Verify if the firewall allows traffic on port 5432.
+3. Check the pg_hba.conf file to ensure your IP address/subnet is allowed to connect.
 
-### 身份验证失败
+### Authentication Failed
 
-**可能原因**：
-- 用户名或密码错误。
-- 用户没有连接权限。
-- 密码验证方法配置错误。
+**Possible Causes**:
+- Incorrect username or password.
+- User doesn't have connection permissions.
+- Password authentication method is incorrectly configured.
 
-**解决方法**：
-1. 验证用户名密码是否正确。
-2. 在 PostgreSQL 中运行：
+**Solutions**:
+1. Verify if the username and password are correct.
+2. Run in PostgreSQL:
    ```sql
    SELECT rolname, rolcanlogin FROM pg_roles WHERE rolname = 'your_username';
    ```
-3. 检查 pg_hba.conf 中的身份验证方法是否兼容（md5, scram-sha-256, trust等）。
+3. Check if the authentication method in pg_hba.conf is compatible (md5, scram-sha-256, trust, etc.).
 
-### 数据库不存在
+### Database Does Not Exist
 
-**可能原因**：
-- 初始数据库名称错误。
-- 数据库已被删除。
+**Possible Causes**:
+- Incorrect initial database name.
+- Database has been deleted.
 
-**解决方法**：
-1. 尝试连接到默认的 `postgres` 数据库。
-2. 连接后，可以查看可用数据库：
+**Solutions**:
+1. Try connecting to the default `postgres` database.
+2. After connecting, you can view available databases:
    ```sql
    SELECT datname FROM pg_database;
    ```
 
-### SSL 连接问题
+### SSL Connection Issues
 
-**可能原因**：
-- SSL 证书路径错误。
-- 服务器未配置 SSL。
-- 证书验证失败。
+**Possible Causes**:
+- Incorrect SSL certificate path.
+- Server not configured for SSL.
+- Certificate verification failed.
 
-**解决方法**：
-1. 确认 PostgreSQL 服务器配置了 SSL（检查 postgresql.conf 中的 ssl = on）。
-2. 验证证书文件的路径和权限。
-3. 尝试使用较低的 SSL 模式（如"要求"而非"验证完全"）进行测试。
+**Solutions**:
+1. Confirm the PostgreSQL server is configured for SSL (check for ssl = on in postgresql.conf).
+2. Verify the path and permissions of certificate files.
+3. Try using a lower SSL mode (like "require" instead of "verify-full") for testing.
 
-### 连接超时
+### Connection Timeout
 
-**可能原因**：
-- 网络问题。
-- 服务器负载过高。
-- 配置的超时时间过短。
+**Possible Causes**:
+- Network issues.
+- Server overload.
+- Timeout setting too short.
 
-**解决方法**：
-1. 检查网络连接和延迟。
-2. 增加连接超时设置。
-3. 如果是远程服务器，尝试使用 ping 或 telnet 测试网络连接。
+**Solutions**:
+1. Check network connection and latency.
+2. Increase connection timeout setting.
+3. For remote servers, try testing network connection using ping or telnet.
 
-## 连接安全最佳实践
+## Connection Security Best Practices
 
-为保证数据库连接的安全性，请遵循以下最佳实践：
+To ensure the security of database connections, follow these best practices:
 
-1. **使用强密码**：
-   - 为数据库用户设置复杂且唯一的密码。
-   - 定期更改密码。
+1. **Use Strong Passwords**:
+   - Set complex and unique passwords for database users.
+   - Change passwords periodically.
 
-2. **使用专用数据库用户**：
-   - 避免使用 postgres 超级用户进行常规连接。
-   - 为不同应用创建具有最小权限的专用用户。
+2. **Use Dedicated Database Users**:
+   - Avoid using the postgres superuser for regular connections.
+   - Create dedicated users with minimal privileges for different applications.
 
-3. **启用 SSL 加密**：
-   - 始终在生产环境中使用 SSL 连接。
-   - 使用"验证 CA"或"验证完全"模式确保连接安全。
+3. **Enable SSL Encryption**:
+   - Always use SSL connections in production environments.
+   - Use "verify-ca" or "verify-full" mode to ensure connection security.
 
-4. **实施 IP 限制**：
-   - 在 pg_hba.conf 中限制允许连接的 IP 地址。
-   - 使用子网掩码限制连接范围。
+4. **Implement IP Restrictions**:
+   - Restrict allowed IP addresses in pg_hba.conf.
+   - Use subnet masks to limit connection range.
 
-5. **使用 SSH 隧道**：
-   - 对于远程连接，考虑使用 SSH 隧道提供额外安全层。
-   - 避免将数据库端口直接暴露在公共网络上。
+5. **Use SSH Tunnels**:
+   - Consider using SSH tunnels for remote connections to provide an extra layer of security.
+   - Avoid exposing database ports directly on public networks.
 
-6. **保护连接凭据**：
-   - 避免在共享脚本或代码库中存储明文密码。
-   - 使用 Navicat 的密码管理功能安全存储凭据。
+6. **Protect Connection Credentials**:
+   - Avoid storing plaintext passwords in shared scripts or codebases.
+   - Use Navicat's password management feature to securely store credentials.
 
-7. **定期审计连接**：
-   - 监控和记录数据库连接尝试。
-   - 检查失败的连接尝试是否存在可能的安全问题。
+7. **Regularly Audit Connections**:
+   - Monitor and log database connection attempts.
+   - Check for failed connection attempts that might indicate security issues.
 
-## 下一步
+## Next Steps
 
-成功连接到 PostgreSQL 数据库后，您可以继续探索 Navicat 的其他功能：
+After successfully connecting to a PostgreSQL database, you can continue exploring other Navicat features:
 
-- [加载数据到 PostgreSQL](../Loading_Data/README.md)
-- [浏览和查看数据](../Browsing_Data/README.md)
-- [运行 SQL 查询](../Running_SQL_Queries/README.md)
-- [导出数据](../Exporting_Data/README.md)
-- [数据库管理](../Database_Administration/README.md) 
+- [Loading Data into PostgreSQL](../Loading_Data/README.md)
+- [Browsing and Viewing Data](../Browsing_Data/README.md)
+- [Running SQL Queries](../Running_SQL_Queries/README.md)
+- [Exporting Data](../Exporting_Data/README.md)
+- [Database Administration](../Database_Administration/README.md) 
